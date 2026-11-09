@@ -76,7 +76,15 @@
   .video-dots button.on{background:var(--accent)}
   .ticket-spin{animation:tilt 5s ease-in-out infinite}
   @keyframes tilt{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
-  @media (prefers-reduced-motion: reduce){.ticket-spin{animation:none}}
+  .host-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px}
+  .host-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;box-shadow:0 4px 14px rgba(22,23,26,.06)}
+  .host-card h3{font-family:'Oswald',sans-serif;font-size:1.1rem;margin-bottom:4px}
+  .host-card p{color:var(--muted);font-size:.92rem;line-height:1.55;margin-bottom:12px}
+  .host-card .instagram-media{margin:0 auto !important;min-width:0 !important;width:100% !important;max-width:420px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px;text-align:center}
+  .host-card .instagram-media a{color:var(--accent);font-weight:700;text-decoration:none}
+  .host-link{display:inline-block;margin-top:12px;font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);text-decoration:none}
+  .host-link:hover{text-decoration:underline}
+  @media (max-width:900px){.host-grid{grid-template-columns:1fr;max-width:440px;margin-left:auto;margin-right:auto}}
 </style>
 </head>
 <body>
@@ -136,6 +144,32 @@
     </div>
     <div class="video-dots" id="video-dots"></div>
   </div>
+
+  <div class="card" id="meet-your-host">
+    <h2>🎬 Meet your host</h2>
+    <p>She walks you around the ML320 in the showroom — the walkaround, the inside, and the giveaway itself. Tap any video to watch it right here, or open it on Instagram.</p>
+    <div class="host-grid">
+      <div class="host-card">
+        <h3>The walkaround</h3>
+        <p>A slow lap around the silver ML320 — the old German tank, up close.</p>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DfgD_iPDMZn/" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DfgD_iPDMZn/" target="_blank" rel="noopener">Watch the ML320 walkaround on Instagram</a></blockquote>
+        <a class="host-link" href="https://www.instagram.com/reel/DfgD_iPDMZn/" target="_blank" rel="noopener">Watch on Instagram &rarr;</a>
+      </div>
+      <div class="host-card">
+        <h3>The inside tour</h3>
+        <p>Step inside — front seats, dash, and room in the back.</p>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DfgEEA_jJD6/" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DfgEEA_jJD6/" target="_blank" rel="noopener">Watch the ML320 interior tour on Instagram</a></blockquote>
+        <a class="host-link" href="https://www.instagram.com/reel/DfgEEA_jJD6/" target="_blank" rel="noopener">Watch on Instagram &rarr;</a>
+      </div>
+      <div class="host-card">
+        <h3>The giveaway</h3>
+        <p>$10 to enter, ends Feb 8, 2027 — this could be yours.</p>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DfgEHYsDAgV/" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DfgEHYsDAgV/" target="_blank" rel="noopener">Watch the ML320 giveaway announcement on Instagram</a></blockquote>
+        <a class="host-link" href="https://www.instagram.com/reel/DfgEHYsDAgV/" target="_blank" rel="noopener">Watch on Instagram &rarr;</a>
+      </div>
+    </div>
+  </div>
+  <script async src="https://www.instagram.com/embed.js"></script>
 
   <div class="card ticket-spin">
     <h2>🚙 The prize</h2>
