@@ -9,21 +9,64 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-  .signup-form{max-width:560px;margin:0 auto}
+  .signup-hero{position:relative;z-index:1;padding:64px 0 24px;text-align:center}
+  .signup-hero h1{font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.05}
+  .signup-hero h1 em{font-style:normal;color:var(--accent)}
+  .signup-hero p{color:var(--muted);font-size:1.05rem;line-height:1.6;max-width:56ch;margin:18px auto 0}
+  .countdown{display:flex;gap:12px;justify-content:center;margin:28px 0 8px;flex-wrap:wrap}
+  .count-box{background:var(--surface);border:1px solid var(--line);border-radius:8px;min-width:84px;padding:12px 8px;box-shadow:0 4px 14px rgba(22,23,26,.06)}
+  .count-box b{display:block;font-family:'Oswald',sans-serif;font-size:1.9rem;line-height:1}
+  .count-box span{font-family:'Space Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+  .count-label{text-align:center;font-family:'Space Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--accent)}
+  .steps{display:flex;gap:10px;justify-content:center;margin:26px auto 0;max-width:560px}
+  .step{flex:1;text-align:center;font-family:'Space Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-top:10px;border-top:3px solid var(--line)}
+  .step.active{color:var(--accent);border-top-color:var(--accent)}
+  .step.done{color:var(--ink);border-top-color:var(--ink)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:26px;margin:26px auto;max-width:680px;box-shadow:0 6px 20px rgba(22,23,26,.05)}
+  .card h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:1.3rem;margin-bottom:6px}
+  .card>p{color:var(--muted);line-height:1.6;margin-bottom:14px}
+  .specs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+  .spec{border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:.82rem;background:var(--bg-alt);cursor:pointer;transition:transform .15s,border-color .15s}
+  .spec:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .spec b{color:var(--accent)}
+  .bundles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+  @media (max-width:560px){.bundles{grid-template-columns:1fr}}
+  .bundle{border:2px solid var(--line);border-radius:10px;padding:18px 10px;text-align:center;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s;background:var(--bg)}
+  .bundle:hover{transform:translateY(-3px)}
+  .bundle.selected{border-color:var(--accent);box-shadow:0 8px 22px rgba(200,30,46,.18);background:#fff}
+  .bundle .entries{font-family:'Oswald',sans-serif;font-size:1.5rem;text-transform:uppercase}
+  .bundle .price{font-family:'Oswald',sans-serif;font-size:1.9rem;color:var(--accent)}
+  .bundle .save{font-size:.75rem;color:var(--muted)}
+  .bundle .best{display:inline-block;background:var(--accent);color:#fff;font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;padding:3px 8px;border-radius:999px;margin-bottom:6px}
+  .poll{display:flex;gap:12px;margin-top:14px}
+  .poll button{flex:1;padding:16px;border:2px solid var(--line);border-radius:10px;background:var(--bg);font-family:'Oswald',sans-serif;font-size:1.2rem;text-transform:uppercase;cursor:pointer;transition:transform .15s,border-color .15s}
+  .poll button:hover{transform:translateY(-2px)}
+  .poll button.voted{border-color:var(--accent);background:#fff}
+  .poll-bar{height:10px;border-radius:999px;background:var(--bg-alt);overflow:hidden;margin-top:14px}
+  .poll-fill{height:100%;background:var(--accent);width:50%;transition:width .6s}
+  .poll-result{text-align:center;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:.08em}
+  .guess-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .guess-row input[type=range]{flex:1;min-width:180px;accent-color:var(--accent)}
+  .guess-num{font-family:'Oswald',sans-serif;font-size:1.8rem;min-width:130px;text-align:right}
   .signup-form label{display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:.85rem;margin:18px 0 6px}
-  .signup-form input,.signup-form select{width:100%;padding:12px 14px;font-size:1rem;font-family:'Archivo',sans-serif;border:1px solid #444;background:#111;color:#eee;border-radius:4px;box-sizing:border-box}
-  .signup-form input:focus,.signup-form select:focus{outline:2px solid var(--brass-bright)}
-  .pay-box{display:none;margin-top:28px;padding:22px;border:1px solid var(--brass-bright);border-radius:6px}
+  .signup-form input,.signup-form select{width:100%;padding:12px 14px;font-size:1rem;font-family:'Archivo',sans-serif;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);box-sizing:border-box}
+  .signup-form input:focus,.signup-form select:focus{outline:2px solid var(--accent)}
+  .pay-box{display:none;margin-top:28px;padding:22px;border:2px solid var(--accent);border-radius:10px;background:#fff}
   .pay-box h3{font-family:'Oswald',sans-serif;text-transform:uppercase;margin-top:0}
   .pay-box p{color:var(--muted);line-height:1.7}
-  .pay-box .amount{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--brass-bright)}
+  .pay-box .amount{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--accent)}
+  .confetti{position:fixed;top:-10px;width:10px;height:16px;z-index:99;pointer-events:none;animation:fall 2.4s linear forwards}
+  @keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.2}}
+  .ticket-spin{animation:tilt 5s ease-in-out infinite}
+  @keyframes tilt{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+  @media (prefers-reduced-motion: reduce){.ticket-spin{animation:none}}
 </style>
 </head>
 <body>
 
 <header>
   <nav class="wrap">
-    <a href="index.html" class="logo"><img src="logo.jpeg" alt="MyCarGiveaway.com" class="logo-img">MyCarGiveaway<span style="color:var(--brass-bright)">.com</span></a>
+    <a href="index.html" class="logo"><img src="logo.jpeg" alt="MyCarGiveaway.com" class="logo-img">MyCarGiveaway<span style="color:var(--accent)">.com</span></a>
     <div class="navlinks">
       <a href="index.html#promise">Our Promise</a>
       <a href="index.html#prizes">Prize Types</a>
@@ -43,16 +86,62 @@
   </nav>
 </header>
 
-<section class="doc-hero">
-  <div class="wrap">
-    <div class="eyebrow">2000 Mercedes-Benz ML 320 — Charlotte, NC</div>
-    <h1 class="display">Enter to win this old German tank.</h1>
-    <p>$10 per entry — 1 for $10, 3 for $25, 5 for $40. 264K miles, automatic, clean title, runs and drives. Entry period Nov 8, 2026 – Feb 8, 2027. Drawing date TBA, winner selected by random drawing and announced live on Instagram / Facebook.</p>
+<section class="signup-hero wrap">
+  <div class="eyebrow">2000 Mercedes-Benz ML 320 — Charlotte, NC</div>
+  <h1 class="display">Win this old<br>German <em>tank.</em></h1>
+  <p>264K miles. Automatic. Clean title. Runs and drives. One lucky entry drives it home — keep it, or flip it.</p>
+  <div class="countdown" id="countdown">
+    <div class="count-box"><b id="cd-d">—</b><span>Days</span></div>
+    <div class="count-box"><b id="cd-h">—</b><span>Hours</span></div>
+    <div class="count-box"><b id="cd-m">—</b><span>Mins</span></div>
+    <div class="count-box"><b id="cd-s">—</b><span>Secs</span></div>
+  </div>
+  <div class="count-label">Until entries close — Feb 8, 2027</div>
+  <div class="steps">
+    <div class="step active" id="step-1">1 · Your details</div>
+    <div class="step" id="step-2">2 · Pick entries</div>
+    <div class="step" id="step-3">3 · Pay $10+</div>
   </div>
 </section>
 
-<section class="doc-body wrap">
-  <article class="doc-content signup-form">
+<div class="wrap">
+  <div class="card ticket-spin">
+    <h2>🚙 The prize</h2>
+    <p>Tap a spec — this is what you're playing for.</p>
+    <div class="specs">
+      <span class="spec" data-fact="2000 Mercedes-Benz ML 320 — the first M-Class, built like a tank."><b>Year</b> · 2000</span>
+      <span class="spec" data-fact="264,852 miles on the clock — and still running and driving."><b>Miles</b> · 264K</span>
+      <span class="spec" data-fact="Automatic transmission, clean title — no salvage, no liens."><b>Title</b> · Clean</span>
+      <span class="spec" data-fact="Valued at $2,220 — 222 entries at $10 covers the prize."><b>Value</b> · $2,220</span>
+      <span class="spec" data-fact="Silver outside, black inside. Charlotte, NC pickup."><b>Where</b> · Charlotte, NC</span>
+    </div>
+    <p id="spec-fact" style="color:var(--accent);font-weight:600;">2000 Mercedes-Benz ML 320 — the first M-Class, built like a tank.</p>
+  </div>
+
+  <div class="card">
+    <h2>Keep it or flip it?</h2>
+    <p>Vote now — the most-voted answer gets a shoutout on our Stories.</p>
+    <div class="poll">
+      <button type="button" id="vote-keep">🛻 Keep it</button>
+      <button type="button" id="vote-flip">💰 Flip it</button>
+    </div>
+    <div class="poll-bar"><div class="poll-fill" id="poll-fill"></div></div>
+    <div class="poll-result" id="poll-result">50% keep · 50% flip — cast your vote</div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Guess the mileage — win a FREE bonus entry</h2>
+    <p>Slide to your guess. Closest guess gets a free extra entry into the drawing.</p>
+    <div class="guess-row">
+      <input type="range" id="guess-range" min="200000" max="300000" step="100" value="264000">
+      <div class="guess-num"><span id="guess-num">264,000</span> mi</div>
+    </div>
+    <p id="guess-note" style="margin-top:10px;">Your guess: <b>264,000 miles</b> — lock it in with your entry below.</p>
+  </div>
+
+  <div class="card signup-form">
+    <h2>Sign up to enter</h2>
+    <p>Three steps, two minutes. Your entry counts once your payment is received and matches these details.</p>
     <form id="entry-form">
       <label for="name">Full name</label>
       <input id="name" name="name" type="text" required autocomplete="name" placeholder="Your full name">
@@ -63,12 +152,18 @@
       <label for="email">Email</label>
       <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@email.com">
 
-      <label for="bundle">How many entries?</label>
-      <select id="bundle" name="bundle" required>
-        <option value="1|$10">1 entry — $10</option>
-        <option value="3|$25">3 entries — $25</option>
-        <option value="5|$40">5 entries — $40</option>
-      </select>
+      <label>How many entries?</label>
+      <div class="bundles" id="bundles">
+        <div class="bundle selected" data-entries="1" data-amount="$10" tabindex="0" role="button" aria-pressed="true">
+          <div class="entries">1 entry</div><div class="price">$10</div><div class="save">$10 each</div>
+        </div>
+        <div class="bundle" data-entries="3" data-amount="$25" tabindex="0" role="button" aria-pressed="false">
+          <div class="entries">3 entries</div><div class="price">$25</div><div class="save">Save $5</div>
+        </div>
+        <div class="bundle" data-entries="5" data-amount="$40" tabindex="0" role="button" aria-pressed="false">
+          <div class="best">Best value</div><div class="entries">5 entries</div><div class="price">$40</div><div class="save">Save $10</div>
+        </div>
+      </div>
 
       <label for="payment">How will you pay?</label>
       <select id="payment" name="payment" required>
@@ -76,20 +171,20 @@
         <option value="Chime">Chime</option>
       </select>
 
-      <p style="margin-top:22px;"><button class="btn-primary" type="submit" style="border:none;cursor:pointer;">Continue to payment</button></p>
-      <p>By entering, you agree to the <a href="official-rules.html" style="color:var(--brass-bright)">Official Rules</a>. You must be 18 or older. Winners are never asked to pay a fee to claim a prize.</p>
+      <p style="margin-top:22px;"><button class="btn-primary" type="submit" style="border:none;cursor:pointer;">Continue to payment →</button></p>
+      <p>By entering, you agree to the <a href="official-rules.html" style="color:var(--accent)">Official Rules</a>. You must be 18 or older. Winners are never asked to pay a fee to claim a prize.</p>
     </form>
 
     <div class="pay-box" id="pay-box">
       <h3>You're almost in — now pay <span class="amount" id="pay-amount">$10</span></h3>
       <p id="pay-instructions"></p>
       <p><strong>Put this in your payment note:</strong> your full name, phone, email, and “ML320”.</p>
-      <p>Your entry counts once your payment is received and matches the details above.</p>
-      <p><a class="btn-primary" id="email-signup" href="#">Email my signup details</a></p>
+      <p id="pay-guess"></p>
+      <p><a class="btn-primary" id="email-signup" href="#">📧 Email my signup details</a></p>
       <p>That opens your email app with your details addressed to us — send it so we have your entry on record.</p>
     </div>
-  </article>
-</section>
+  </div>
+</div>
 
 <footer>
   <div class="wrap footer-row">
@@ -106,25 +201,113 @@
 </footer>
 
 <script>
+// Countdown to Feb 8, 2027, 11:59pm ET
+var end = new Date('2027-02-08T23:59:59-05:00').getTime();
+function tick(){
+  var d = end - Date.now();
+  if (d < 0) d = 0;
+  document.getElementById('cd-d').textContent = Math.floor(d / 86400000);
+  document.getElementById('cd-h').textContent = String(Math.floor(d / 3600000) % 24).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(Math.floor(d / 60000) % 60).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(Math.floor(d / 1000) % 60).padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
+
+// Spec facts
+document.querySelectorAll('.spec').forEach(function(el){
+  el.addEventListener('click', function(){
+    document.getElementById('spec-fact').textContent = el.getAttribute('data-fact');
+  });
+});
+
+// Keep / Flip poll (fun vote, stored on this device only)
+var vote = localStorage.getItem('ml320-vote') || null;
+var keep = parseInt(localStorage.getItem('ml320-keep') || '50', 10);
+var flip = parseInt(localStorage.getItem('ml320-flip') || '50', 10);
+function renderPoll(){
+  var total = keep + flip;
+  var kp = Math.round(keep / total * 100);
+  document.getElementById('poll-fill').style.width = kp + '%';
+  document.getElementById('poll-result').textContent = kp + '% keep · ' + (100 - kp) + '% flip — ' + (vote ? 'you voted ' + vote : 'cast your vote');
+  document.getElementById('vote-keep').classList.toggle('voted', vote === 'KEEP');
+  document.getElementById('vote-flip').classList.toggle('voted', vote === 'FLIP');
+}
+function cast(v){
+  if (vote === v) return;
+  if (vote === 'KEEP') keep--; if (vote === 'FLIP') flip--;
+  if (v === 'KEEP') keep++; else flip++;
+  vote = v;
+  localStorage.setItem('ml320-vote', vote);
+  localStorage.setItem('ml320-keep', keep);
+  localStorage.setItem('ml320-flip', flip);
+  renderPoll();
+}
+document.getElementById('vote-keep').addEventListener('click', function(){ cast('KEEP'); });
+document.getElementById('vote-flip').addEventListener('click', function(){ cast('FLIP'); });
+renderPoll();
+
+// Mileage guess slider
+var range = document.getElementById('guess-range');
+function renderGuess(){
+  var v = parseInt(range.value, 10).toLocaleString('en-US');
+  document.getElementById('guess-num').textContent = v;
+  document.getElementById('guess-note').innerHTML = 'Your guess: <b>' + v + ' miles</b> — lock it in with your entry below.';
+}
+range.addEventListener('input', renderGuess);
+renderGuess();
+
+// Bundle cards
+var selected = document.querySelector('.bundle.selected');
+document.querySelectorAll('.bundle').forEach(function(el){
+  function pick(){
+    document.querySelectorAll('.bundle').forEach(function(b){ b.classList.remove('selected'); b.setAttribute('aria-pressed','false'); });
+    el.classList.add('selected'); el.setAttribute('aria-pressed','true'); selected = el;
+    document.getElementById('step-2').classList.add('done');
+  }
+  el.addEventListener('click', pick);
+  el.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+});
+
+// Confetti
+function confetti(){
+  var colors = ['#C81E2E','#16171A','#E8B64C','#63666D','#fff'];
+  for (var i = 0; i < 60; i++){
+    var c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDelay = (Math.random() * 0.6) + 's';
+    document.body.appendChild(c);
+    setTimeout(function(el){ el.remove(); }, 3200, c);
+  }
+}
+
+// Submit -> payment step
 document.getElementById('entry-form').addEventListener('submit', function (e) {
   e.preventDefault();
   var name = document.getElementById('name').value.trim();
   var phone = document.getElementById('phone').value.trim();
   var email = document.getElementById('email').value.trim();
-  var bundle = document.getElementById('bundle').value.split('|');
-  var entries = bundle[0], amount = bundle[1];
+  var entries = selected.getAttribute('data-entries');
+  var amount = selected.getAttribute('data-amount');
   var payment = document.getElementById('payment').value;
+  var guess = document.getElementById('guess-num').textContent;
   var instructions = payment === 'PayPal'
     ? 'Pay ' + amount + ' via PayPal to ceo@jciglobalcorp.com for ' + entries + ' entr' + (entries === '1' ? 'y' : 'ies') + '.'
     : 'Pay ' + amount + ' via Chime to $Jci-Global-corp for ' + entries + ' entr' + (entries === '1' ? 'y' : 'ies') + '.';
   document.getElementById('pay-amount').textContent = amount;
   document.getElementById('pay-instructions').textContent = instructions;
+  document.getElementById('pay-guess').textContent = 'Your mileage guess: ' + guess + ' miles' + (vote ? ' · You voted: ' + vote : '') + ' — closest guess wins a FREE bonus entry.';
   var subject = encodeURIComponent('ML320 Giveaway Entry — ' + name);
-  var body = encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + email + '\nEntries: ' + entries + ' (' + amount + ')\nPayment method: ' + payment + '\nGiveaway: 2000 Mercedes-Benz ML320');
+  var body = encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + email + '\nEntries: ' + entries + ' (' + amount + ')\nPayment method: ' + payment + '\nMileage guess: ' + guess + ' miles\nKeep or flip: ' + (vote || 'no vote') + '\nGiveaway: 2000 Mercedes-Benz ML320');
   document.getElementById('email-signup').href = 'mailto:ceo@jciglobalcorp.com?subject=' + subject + '&body=' + body;
   document.getElementById('entry-form').style.display = 'none';
   document.getElementById('pay-box').style.display = 'block';
+  document.getElementById('step-1').classList.add('done');
+  document.getElementById('step-2').classList.add('done');
+  document.getElementById('step-3').classList.add('active');
   document.getElementById('pay-box').scrollIntoView();
+  confetti();
 });
 </script>
 
